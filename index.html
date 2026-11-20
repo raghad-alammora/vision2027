@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vision Board 2027</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #fff0f5 0%, #ffe4ec 50%, #f8bbd0 100%);
+      color: #5c3a47;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .welcome-card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 60px 40px;
+      border-radius: 30px;
+      box-shadow: 0 20px 50px rgba(216, 112, 147, 0.2);
+      text-align: center;
+      max-width: 520px;
+      width: 100%;
+      border: 2px solid #ffffff;
+    }
+
+    h1.main-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 46px;
+      color: #b5486e;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #8c586b;
+      margin-bottom: 35px;
+    }
+
+    .squiggly-btn {
+      background: linear-gradient(135deg, #f48fb1, #ec407a);
+      border: none;
+      width: 85px;
+      height: 85px;
+      border-radius: 24px;
+      cursor: pointer;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 12px 25px rgba(236, 64, 122, 0.35);
+      transition: transform 0.25s ease;
+    }
+
+    .squiggly-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+    }
+
+    .board-container {
+      max-width: 700px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .poster-board {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(181, 72, 110, 0.2);
+      border: 12px solid #fff5f8;
+      margin: 0 auto 25px auto;
+      max-width: 600px;
+    }
+
+    .board-header {
+      font-family: Georgia, serif;
+      font-size: 30px;
+      color: #b5486e;
+      margin-bottom: 5px;
+      letter-spacing: 2px;
+    }
+
+    .board-sub {
+      font-size: 12px;
+      color: #c27b94;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+    }
+
+    .grid-12 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      background-color: #fff5f8;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .photo-slot {
+      aspect-ratio: 1 / 1;
+      background-color: #fce4ec;
+      border: 2px dashed #f06292;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .photo-slot:hover { background-color: #f8bbd0; }
+    .photo-slot.has-image { border: none; }
+    .photo-slot span { font-size: 26px; color: #ec407a; }
+    .photo-slot p { font-size: 11px; color: #ad1457; }
+
+    .photo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .save-btn {
+      background: linear-gradient(135deg, #d81b60, #ad1457);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      font-size: 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 8px 20px rgba(173, 20, 87, 0.3);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .save-btn:hover { transform: scale(1.03); }
+
+    .back-btn {
+      background: white;
+      color: #b5486e;
+      border: 1px solid #f48fb1;
+      padding: 14px 25px;
+      font-size: 15px;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+
+    .result-card {
+      background: white;
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 20px 50px rgba(181, 72, 110, 0.25);
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .result-card h2 {
+      color: #b5486e;
+      margin-bottom: 8px;
+      font-family: Georgia, serif;
+    }
+
+    .result-card p {
+      color: #8c586b;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    #final-poster-img {
+      max-width: 100%;
+      max-height: 60vh;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      margin-bottom: 20px;
+      border: 2px solid #f8bbd0;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <div class="welcome-card" id="welcome-view">
+    <h1 class="main-title">Vision Board 2027</h1>
+    <p class="subtitle">Design your dream year, visualize your goals, and print your poster ✨</p>
+    
+    <button type="button" class="squiggly-btn" id="start-btn">
+      <svg width="45" height="45" viewBox="0 0 100 100" fill="none">
+        <path d="M15 65 C 25 45, 35 75, 45 55 C 55 35, 65 65, 78 40" stroke="white" stroke-width="6" stroke-linecap="round"/>
+        <path d="M65 36 L 80 38 L 76 53" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="board-container hidden" id="board-view">
+    <div class="poster-board">
+      <div class="board-header">VISION BOARD 2027</div>
+      <div class="board-sub">DREAM • BELIEVE • ACHIEVE</div>
+      <div class="grid-12" id="grid-container"></div>
+    </div>
+
+    <div class="controls">
+      <button type="button" class="back-btn" id="back-home-btn">← Back</button>
+      <button type="button" class="save-btn" id="generate-btn">Save & View Poster 🖨️💖</button>
+    </div>
+  </div>
+
+  <div class="result-card hidden" id="result-view">
+    <h2>Your 2027 Poster is Ready! 🎉</h2>
+    <p>هذه لوحتك كقطعة واحدة جاهزة للطباعة! اضغطي زر التحميل بالأسفل لحفظها:</p>
+    <img id="final-poster-img" alt="Vision Board 2027">
+    <div class="controls">
+      <button type="button" class="back-btn" id="edit-again-btn">✏️ تعديل الصور</button>
+      <a id="download-link" class="save-btn" download="Vision-Board-2027.png">⬇️ حفظ الصورة على الجهاز</a>
+    </div>
+  </div>
+
+  <script>
+    const slotsImages = new Array(12).fill(null);
+    const gridContainer = document.getElementById('grid-container');
+
+    for (let i = 0; i < 12; i++) {
+      const slot = document.createElement('div');
+      slot.className = 'photo-slot';
+      slot.innerHTML = '<span>+</span><p>Goal ' + (i + 1) + '</p>';
+
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.style.display = 'none';
+      slot.appendChild(input);
+
+      slot.addEventListener('click', function() {
+        input.click();
+      });
+
+      input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          slot.classList.add('has-image');
+          const oldImg = slot.querySelector('img');
+          if (oldImg) oldImg.remove();
+
+          const img = document.createElement('img');
+          img.src = event.target.result;
+          slot.appendChild(img);
+          slotsImages[i] = img;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      gridContainer.appendChild(slot);
+    }
+
+    document.getElementById('start-btn').addEventListener('click', function() {
+      document.getElementById('welcome-view').classList.add('hidden');
+      document.getElementById('board-view').classList.remove('hidden');
+    });
+
+    document.getElementById('back-home-btn').addEventListener('click', function() {
+      document.getElementById('board-view').classList.add('hidden');
+      document.getElementById('welcome-view').classList.remove('hidden');
+    });
+
+    document.getElementById('edit-again-btn').addEventListener('click', function() {
+      document.getElementById('result-view').classList.add('hidden');
+      document.getElementById('board-view').classList.remove('hidden');
+    });
+
+    document.getElementById('generate-btn').addEventListener('click', function() {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      const W = 1200;
+      const H = 1650;
+      canvas.width = W;
+      canvas.height = H;
+
+      ctx.fillStyle = '#fff0f5';
+      ctx.fillRect(0, 0, W, H);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(35, 35, W - 70, H - 70);
+
+      ctx.fillStyle = '#b5486e';
+      ctx.font = 'bold 58px Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('VISION BOARD 2027', W / 2, 130);
+
+      ctx.fillStyle = '#c27b94';
+      ctx.font = '22px Arial, sans-serif';
+      ctx.fillText('D R E A M   •   B E L I E V E   •   A C H I E V E', W / 2, 175);
+
+      const cols = 3;
+      const gap = 22;
+      const startX = 80;
+      const startY = 220;
+      const cellSize = (W - (startX * 2) - (gap * (cols - 1))) / cols;
+
+      for (let i = 0; i < 12; i++) {
+        const col = i % cols;
+        const row = Math.floor(i / cols);
+        const x = startX + col * (cellSize + gap);
+        const y = startY + row * (cellSize + gap);
+
+        ctx.fillStyle = '#fce4ec';
+        ctx.fillRect(x, y, cellSize, cellSize);
+
+        const img = slotsImages[i];
+        if (img && img.complete && img.naturalWidth > 0) {
+          const imgRatio = img.naturalWidth / img.naturalHeight;
+          let sx = 0, sy = 0, sWidth = img.naturalWidth, sHeight = img.naturalHeight;
+
+          if (imgRatio > 1) {
+            sWidth = img.naturalHeight;
+            sx = (img.naturalWidth - sWidth) / 2;
+          } else {
+            sHeight = img.naturalWidth;
+            sy = (img.naturalHeight - sHeight) / 2;
+          }
+          ctx.drawImage(img, sx, sy, sWidth, sHeight, x, y, cellSize, cellSize);
+        }
+      }
+
+      const finalDataUrl = canvas.toDataURL('image/png');
+      document.getElementById('final-poster-img').src = finalDataUrl;
+      const dlLink = document.getElementById('download-link');
+      dlLink.href = finalDataUrl;
+      document.getElementById('board-view').classList.add('hidden');
+      document.getElementById('result-view').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
